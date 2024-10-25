@@ -22,12 +22,10 @@
         <sonar.language>java</sonar.language>
     </properties>
     <scm>
-        <connection>scm:git:https://github.com/walidhsn/timesheet-devops.git</connection>
-        <developerConnection>scm:git:https://github.com/walidhsn/timesheet-devops.git</developerConnection>
-        <url>https://github.com/walidhsn/timesheet-devops</url>
-        <tag>HEAD</tag>
+        <connection>scm:git:https://github.com/walidhsn/tp_foyer.git</connection>
+        <developerConnection>scm:git:https://github.com/walidhsn/tp_foyer.git</developerConnection>
+        <url>https://github.com/walidhsn/tp_foyer.git</url>
     </scm>
-
     <dependencies>
 
         <dependency>

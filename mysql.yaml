@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-  namespace: webapps  # Set the namespace to 'webapps'
+  namespace: webapps
 spec:
   accessModes:
     - ReadWriteOnce
@@ -13,8 +13,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysqldb  # Service name is mysqldb
-  namespace: webapps  # Set the namespace to 'webapps'
+  name: mysqldb
+  namespace: webapps
 spec:
   ports:
     - port: 3306
@@ -27,7 +27,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
-  namespace: webapps  # Set the namespace to 'webapps'
+  namespace: webapps
 spec:
   replicas: 1
   selector:

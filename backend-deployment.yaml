@@ -5,23 +5,35 @@ metadata:
   namespace: webapps
 spec:
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: backend-app
+      version: stable
   template:
     metadata:
       labels:
         app: backend-app
+        version: stable
     spec:
       containers:
         - name: backend-container
           image: walidhsn/benhassouna_walid_tpfoyer:1.0.7
           ports:
             - containerPort: 8089
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8089
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8089
+            initialDelaySeconds: 30
+            periodSeconds: 10

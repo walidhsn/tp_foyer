@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11
+FROM openjdk:17-jdk
 
 # Create a non-root user and group
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser

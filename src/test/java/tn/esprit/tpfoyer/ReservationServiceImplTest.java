@@ -43,7 +43,7 @@ public class ReservationServiceImplTest {
     void testRetrieveAllReservations() {
         List<Reservation> reservations = reservationService.retrieveAllReservations();
         assertNotNull(reservations);
-        assertTrue(reservations.size() >= 0);
+        assertTrue(!reservations.isEmpty());
     }
 
     @Test

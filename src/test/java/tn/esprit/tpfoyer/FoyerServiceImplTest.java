@@ -47,7 +47,7 @@ public class FoyerServiceImplTest {
     void testRetrieveAllFoyers() {
         List<Foyer> foyers = foyerService.retrieveAllFoyers();
         assertNotNull(foyers);
-        assertTrue(foyers.size() >= 0);
+        assertTrue(!foyers.isEmpty());
     }
 
     @Test

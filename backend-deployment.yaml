@@ -8,27 +8,20 @@ spec:
   selector:
     matchLabels:
       app: backend-app
-      version: stable  # Label for stable version
   template:
     metadata:
       labels:
         app: backend-app
-        version: stable  # Label for stable version
     spec:
       containers:
         - name: backend-container
-          image: walidhsn/benhassouna_walid_tpfoyer:1.0.12
+          image: walidhsn/benhassouna_walid_tpfoyer
           ports:
             - containerPort: 8089
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8089
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8089
-            initialDelaySeconds: 30
-            periodSeconds: 10
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

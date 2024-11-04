@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: walidhsn/benhassouna_walid_tpfoyer:1.0.8
+          image: walidhsn/benhassouna_walid_tpfoyer:1.0.9
           ports:
             - containerPort: 8089
           readinessProbe:

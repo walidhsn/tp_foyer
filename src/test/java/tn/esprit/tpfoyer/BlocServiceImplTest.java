@@ -44,7 +44,7 @@ public class BlocServiceImplTest {
     void testRetrieveAllBlocs() {
         List<Bloc> blocs = blocService.retrieveAllBlocs();
         assertNotNull(blocs);
-        assertTrue(blocs.size() >= 0);
+        assertTrue(!blocs.isEmpty());
     }
 
     @Test

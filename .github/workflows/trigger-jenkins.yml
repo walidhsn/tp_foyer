@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Check commit message
         id: check_commit
@@ -19,14 +19,17 @@ jobs:
           EXCLUDED_PATTERNS="maven-release-plugin|Update Docker Compose|Update Backend deployment"
           LAST_COMMIT=$(git log -1 --pretty=%B)
           echo "Last commit message: $LAST_COMMIT"
+          
+          # Check if the commit matches any excluded pattern
           if [[ "$LAST_COMMIT" =~ $EXCLUDED_PATTERNS ]]; then
             echo "Excluded commit pattern found. Skipping Jenkins trigger."
-            exit 0
+            # Use exit 1 here to stop the pipeline and prevent any further steps
+            exit 1
           fi
-          echo "No excluded patterns. Proceeding to trigger Jenkins."
+          echo "No excluded patterns found. Proceeding to trigger Jenkins."
 
       - name: Trigger Jenkins Webhook
-        if: steps.check_commit.outcome == 'success'
+        if: success()  # Proceed only if the previous step was successful
         env:
           JENKINS_URL: ${{ secrets.JENKINS_URL }}
           JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
@@ -34,4 +37,4 @@ jobs:
           JENKINS_USERNAME: ${{ secrets.JENKINS_USERNAME }}
         run: |
           curl -X POST "${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build" \
-               --user "${JENKINS_USERNAME}:${JENKINS_API_TOKEN}"  
+               --user "${JENKINS_USERNAME}:${JENKINS_API_TOKEN}"

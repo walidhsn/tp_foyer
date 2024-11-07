@@ -1,0 +1,36 @@
+name: Conditional Jenkins Trigger
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check commit message
+        id: check_commit
+        run: |
+          EXCLUDED_PATTERNS="maven-release-plugin|Update Docker Compose|Update Backend deployment"
+          LAST_COMMIT=$(git log -1 --pretty=%B)
+          echo "Last commit message: $LAST_COMMIT"
+          if [[ "$LAST_COMMIT" =~ $EXCLUDED_PATTERNS ]]; then
+            echo "Excluded commit pattern found. Skipping Jenkins trigger."
+            exit 0
+          fi
+          echo "No excluded patterns. Proceeding to trigger Jenkins."
+
+      - name: Trigger Jenkins Webhook
+        if: steps.check_commit.outcome == 'success'
+        env:
+          JENKINS_URL: ${{ secrets.JENKINS_URL }}
+          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+          JENKINS_JOB_NAME: ${{ secrets.JENKINS_JOB_NAME }}
+        run: |
+          curl -X POST "${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build" \
+               --user "your-jenkins-username:${JENKINS_API_TOKEN}"

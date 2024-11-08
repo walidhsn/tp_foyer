@@ -15,7 +15,7 @@ services:
   app-foyer:
     depends_on:
       - mysqldb
-    image: walidhsn/benhassouna_walid_tpfoyer:1.0.31
+    image: walidhsn/benhassouna_walid_tpfoyer:1.0.32
     restart: on-failure
     ports:
       - 8089:8089
